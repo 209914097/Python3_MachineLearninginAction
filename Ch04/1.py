@@ -17,4 +17,8 @@ p,c = bayes.loadDataSet()
 # ltoken = regex.split(mysent)
 # tok = [token.lower() for token in ltoken if len(token)>0]
 # print(tok)
-bayes.spamTest()
+# bayes.spamTest()
+import feedparser
+ny = feedparser.parse('http://newyork.craigslist.org/stp/index.rss')
+sf = feedparser.parse('http://sfbay.craigslist.org/stp/index.rss')
+vocablist,psf,pny = bayes.localWords(ny,sf)
