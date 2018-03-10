@@ -138,10 +138,10 @@ def localWords(feed1,feed0):
     for pairW in top30Words:
         if pairW[0] in vocabList: vocabList.remove(pairW[0])
     trainingSet = list(range(2*minLen)); testSet=[]           #create test set
-    for i in range(20):
+    for i in range(20):                         #取20个作为测试样本，剩下的作为训练样本，即用于计算贝叶斯的各种概率
         randIndex = int(random.uniform(0,len(trainingSet)))
         testSet.append(trainingSet[randIndex])
-        del(trainingSet[randIndex])  
+        del(trainingSet[randIndex])
     trainMat=[]; trainClasses = []
     for docIndex in trainingSet:#train the classifier (get probs) trainNB0
         trainMat.append(bagOfWords2VecMN(vocabList, docList[docIndex]))
