@@ -21,4 +21,7 @@ p,c = bayes.loadDataSet()
 import feedparser
 ny = feedparser.parse('http://newyork.craigslist.org/stp/index.rss')
 sf = feedparser.parse('http://sfbay.craigslist.org/stp/index.rss')
-vocablist,psf,pny = bayes.localWords(ny,sf)
+# vocablist,psf,pny = bayes.localWords(ny,sf)
+
+bayes.getTopWords(ny,sf)
+
