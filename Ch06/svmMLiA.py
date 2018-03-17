@@ -42,7 +42,7 @@ def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
                 j = selectJrand(i,m)
                 fXj = float(multiply(alphas,labelMat).T*(dataMatrix*dataMatrix[j,:].T)) + b
                 Ej = fXj - float(labelMat[j])
-                alphaIold = alphas[i].copy(); alphaJold = alphas[j].copy();
+                alphaIold = alphas[i].copy(); alphaJold = alphas[j].copy();# alphaJold = alphas[j]，执行alphas[j] -= labelMat[j]*(Ei - Ej)/eta时，alphaJold的值也会跟着改变，而alphaJold = alphas[j].copy()分配了新的内存，而alphaJold不会改变
                 if (labelMat[i] != labelMat[j]):
                     L = max(0, alphas[j] - alphas[i])
                     H = min(C, C + alphas[j] - alphas[i])
@@ -83,7 +83,7 @@ def kernelTrans(X, A, kTup): #calc the kernel or transform data to a higher dime
     return K
 
 class optStruct:
-    def __init__(self,dataMatIn, classLabels, C, toler, kTup):  # Initialize the structure with the parameters 
+    def __init__(self,dataMatIn, classLabels, C, toler, kTup):  # Initialize the structure with the parameters
         self.X = dataMatIn
         self.labelMat = classLabels
         self.C = C
@@ -95,12 +95,12 @@ class optStruct:
         self.K = mat(zeros((self.m,self.m)))
         for i in range(self.m):
             self.K[:,i] = kernelTrans(self.X, self.X[i,:], kTup)
-        
+
 def calcEk(oS, k):
     fXk = float(multiply(oS.alphas,oS.labelMat).T*oS.K[:,k] + oS.b)
     Ek = fXk - float(oS.labelMat[k])
     return Ek
-        
+
 def selectJ(i, oS, Ei):         #this is the second choice -heurstic, and calcs Ej
     maxK = -1; maxDeltaE = 0; Ej = 0
     oS.eCache[i] = [1,Ei]  #set valid #choose the alpha that gives the maximum delta E
@@ -121,7 +121,7 @@ def selectJ(i, oS, Ei):         #this is the second choice -heurstic, and calcs 
 def updateEk(oS, k):#after any alpha has changed update the new value in the cache
     Ek = calcEk(oS, k)
     oS.eCache[k] = [1,Ek]
-        
+
 def innerL(i, oS):
     Ei = calcEk(oS, i)
     if ((oS.labelMat[i]*Ei < -oS.tol) and (oS.alphas[i] < oS.C)) or ((oS.labelMat[i]*Ei > oS.tol) and (oS.alphas[i] > 0)):
@@ -157,7 +157,7 @@ def smoP(dataMatIn, classLabels, C, toler, maxIter,kTup=('lin', 0)):    #full Pl
     while (iter < maxIter) and ((alphaPairsChanged > 0) or (entireSet)):
         alphaPairsChanged = 0
         if entireSet:   #go over all
-            for i in range(oS.m):        
+            for i in range(oS.m):
                 alphaPairsChanged += innerL(i,oS)
                 print ("fullSet, iter: %d i:%d, pairs changed %d" % (iter,i,alphaPairsChanged))
             iter += 1
@@ -168,7 +168,7 @@ def smoP(dataMatIn, classLabels, C, toler, maxIter,kTup=('lin', 0)):    #full Pl
                 print ("non-bound, iter: %d i:%d, pairs changed %d" % (iter,i,alphaPairsChanged))
             iter += 1
         if entireSet: entireSet = False #toggle entire set loop
-        elif (alphaPairsChanged == 0): entireSet = True  
+        elif (alphaPairsChanged == 0): entireSet = True
         print ("iteration number: %d" % iter)
     return oS.b,oS.alphas
 
@@ -202,7 +202,7 @@ def testRbf(k1=1.3):
     for i in range(m):
         kernelEval = kernelTrans(sVs,datMat[i,:],('rbf', k1))
         predict=kernelEval.T * multiply(labelSV,alphas[svInd]) + b
-        if sign(predict)!=sign(labelArr[i]): errorCount += 1    
+        if sign(predict)!=sign(labelArr[i]): errorCount += 1
     print ("the test error rate is: %f" % (float(errorCount)/m))
     
 def img2vector(filename):
