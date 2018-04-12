@@ -3,6 +3,7 @@ Created on Oct 27, 2010
 Logistic Regression Working Module
 @author: Peter
 '''
+# Logistic回归核心就是求出z = w0*x0 + w1*x1 + w2*x2 +... wn*xn中的最佳参数，w0，w1...wn
 from numpy import *
 
 def loadDataSet():
@@ -102,12 +103,12 @@ def colicTest():
         if int(classifyVector(array(lineArr), trainWeights))!= int(currLine[21]):
             errorCount += 1
     errorRate = (float(errorCount)/numTestVec)
-    print "the error rate of this test is: %f" % errorRate
+    print ("the error rate of this test is: %f" % errorRate)
     return errorRate
 
 def multiTest():
     numTests = 10; errorSum=0.0
     for k in range(numTests):
         errorSum += colicTest()
-    print "after %d iterations the average error rate is: %f" % (numTests, errorSum/float(numTests))
+    print ("after %d iterations the average error rate is: %f" % (numTests, errorSum/float(numTests)))
         
