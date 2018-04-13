@@ -9,7 +9,7 @@ import matplotlib.cm as cm
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 
-leafNode = dict(boxstyle="round4", fc="0.8")
+leafNode = dict(boxstyle="round4", fc="0.8")#boxstyle用来调节文本框的样式是波浪还是直角，fc是文本框的灰度，1是白色0是黑色
 arrow_args = dict(arrowstyle="<-")
 
 matplotlib.rcParams['xtick.direction'] = 'out'
@@ -32,7 +32,7 @@ Z = 1.0 * (Z2 + Z1)+5.0
 # the label
 plt.figure()
 CS = plt.contour(X, Y, Z)
-plt.annotate('', xy=(0.05, 0.05),  xycoords='axes fraction',
+plt.annotate('', xy=(0.05, 0.05),  xycoords='axes fraction',#xycoords='axes fraction',表示xy=(0.05, 0.05)中的参数属性，'axes fraction'意味着在整个坐标轴的5%，5%的地方，默认是'data'意味着在坐标刻度为(0.05,0.05)的地方
              xytext=(0.2,0.2), textcoords='axes fraction',
              va="center", ha="center", bbox=leafNode, arrowprops=arrow_args )
 plt.text(-1.9, -1.8, 'P0')
