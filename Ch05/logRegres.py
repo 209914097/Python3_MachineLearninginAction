@@ -69,12 +69,12 @@ def stocGradAscent1(dataMatrix, classLabels, numIter=150):
     for j in range(numIter):
         dataIndex = range(m)
         for i in range(m):
-            alpha = 4/(1.0+j+i)+0.0001    #apha decreases with iteration, does not 
+            alpha = 4/(1.0+j+i)+0.0001    #apha decreases with iteration, does not
             randIndex = int(random.uniform(0,len(dataIndex)))#go to 0 because of the constant
             h = sigmoid(sum(dataMatrix[randIndex]*weights))
             error = classLabels[randIndex] - h
             weights = weights + alpha * error * dataMatrix[randIndex]
-            del(dataIndex[randIndex])
+            del(list(dataIndex)[randIndex])
     return weights
 
 def classifyVector(inX, weights):
