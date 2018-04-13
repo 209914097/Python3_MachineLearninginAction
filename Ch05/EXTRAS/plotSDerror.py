@@ -37,8 +37,8 @@ def stocGradAscent1(dataMatrix, classLabels):
             #print error
             weights = weights + alpha * error * dataMatrix[randIndex]
             weightsHistory[j*m + i,:] = weights
-            del(dataIndex[randIndex])
-    print weights
+            del(list(dataIndex)[randIndex])
+    print (weights)
     return weightsHistory
     
 
