@@ -129,7 +129,7 @@ def clusterClubs(numClust=5):
     scatterMarkers=['s', 'o', '^', '8', 'p', \
                     'd', 'v', 'h', '>', '<']
     axprops = dict(xticks=[], yticks=[])
-    ax0=fig.add_axes(rect, label='ax0', **axprops)#Figure代表一个绘制面板，其中可以包涵多个Axes（即多个图表）。**axprops的作用是删除该图表ax0 x,y轴的刻度
+    ax0=fig.add_axes(rect, label='ax0', **axprops)#Figure代表一个绘制面板，其中可以包涵多个Axes（即多个图表）,类似add_subplot()。**axprops的作用是删除该图表ax0 x,y轴的刻度
     imgP = plt.imread('Portland.png')
     ax0.imshow(imgP)
     ax1=fig.add_axes(rect, label='ax1', frameon=False)#frameon=False不显示外边框的大黑边，同时让背景透明。可参照a.py代码，拖动图像有一些神奇的效果
