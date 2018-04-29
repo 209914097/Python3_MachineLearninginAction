@@ -86,10 +86,10 @@ def geoGrab(stAddress, city):
     params['flags'] = 'J'#JSON return type
     params['appid'] = 'aaa0VN6k'
     params['location'] = '%s %s' % (stAddress, city)
-    url_params = urllib.urlencode(params)
+    url_params = urllib.parse.urlencode(params)
     yahooApi = apiStem + url_params      #print url_params
     print (yahooApi)
-    c=urllib.urlopen(yahooApi)
+    c=urllib.request.urlopen(yahooApi)
     return json.loads(c.read())
 
 from time import sleep
@@ -107,8 +107,9 @@ def massPlaceFind(fileName):
         else: print ("error fetching")
         sleep(1)
     fw.close()
-    
+
 def distSLC(vecA, vecB):#Spherical Law of Cosines
+    #球面距离公式推导过程https://blog.csdn.net/liminlu0314/article/details/8553926
     a = sin(vecA[0,1]*pi/180) * sin(vecB[0,1]*pi/180)
     b = cos(vecA[0,1]*pi/180) * cos(vecB[0,1]*pi/180) * \
                       cos(pi * (vecB[0,0]-vecA[0,0]) /180)
@@ -128,10 +129,10 @@ def clusterClubs(numClust=5):
     scatterMarkers=['s', 'o', '^', '8', 'p', \
                     'd', 'v', 'h', '>', '<']
     axprops = dict(xticks=[], yticks=[])
-    ax0=fig.add_axes(rect, label='ax0', **axprops)
+    ax0=fig.add_axes(rect, label='ax0', **axprops)#Figure代表一个绘制面板，其中可以包涵多个Axes（即多个图表）。**axprops的作用是删除该图表ax0 x,y轴的刻度
     imgP = plt.imread('Portland.png')
     ax0.imshow(imgP)
-    ax1=fig.add_axes(rect, label='ax1', frameon=False)
+    ax1=fig.add_axes(rect, label='ax1', frameon=False)#frameon=False不显示外边框的大黑边，同时让背景透明。可参照a.py代码，拖动图像有一些神奇的效果
     for i in range(numClust):
         ptsInCurrCluster = datMat[nonzero(clustAssing[:,0].A==i)[0],:]
         markerStyle = scatterMarkers[i % len(scatterMarkers)]
