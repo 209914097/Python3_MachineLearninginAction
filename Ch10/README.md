@@ -36,11 +36,11 @@
 
 <img src="https://github.com/209914097/Python3_MachineLearninginAction/blob/master/Ch10/img/2.png" width="600px">
 
-&emsp;&emsp;然后遍历A簇和B簇。具体做什么呢？假如遍历到A簇，对A簇所有点调用kMeans()函数一分为二，当然在一分为二之前计算A簇所有点的SSE_A，得到代码中的sseSplit变量，而B簇所有点的SSE_B就是不用一分为二的 sseNotSplit。（SSE_A+SSE_B= **`A`** ）<SSE的话，则更新SSE，否则不更新。
+&emsp;&emsp;然后遍历A簇和B簇。具体做什么呢？假如遍历到A簇，对A簇所有点调用kMeans()函数一分为二，A簇分为a,b两簇后，把a,b两个簇所有点的sse加起来得到SSE_A，SSE_A就是代码中的sseSplit变量，而B簇所有点的SSE_B就是不用一分为二的 sseNotSplit。（SSE_A+SSE_B= **`A`** ）<SSE的话，则更新SSE，否则不更新。
 
 &emsp;&emsp;你可能会问，究竟采用把A簇一分为二，还是采用把B簇一分为二的情况。别急，上面遍历完A簇后，自然遍历B簇。
 
-&emsp;&emsp;同样地，对B簇所有点调用kMeans()函数一分为二，当然在一分为二之前计算B簇所有点的SSE_B，得到代码中的sseSplit变量，而A簇所有点的SSE_A就是不用一分为二的 sseNotSplit。（SSE_B+SSE_A= **`B`** ）<SSE的话，则更新SSE，否则不更新。
+&emsp;&emsp;同样地，对B簇所有点调用kMeans()函数一分为二，B簇分为a,b两簇后，把a,b两个簇所有点的sse加起来得到SSE_B，得到代码中的sseSplit变量，而A簇所有点的SSE_A就是不用一分为二的 sseNotSplit。（SSE_B+SSE_A= **`B`** ）<SSE的话，则更新SSE，否则不更新。
 
 &emsp;&emsp;看到这里，程序实际上把A簇一分为二，B簇一分为二两种情况都算了一遍，而最终程序会选择min（ **`A`** , **`B`** ）的一种分法，也就是若A簇一分为二的SSE比B簇一分为二情况的SSE要小，那么将采用把A簇一分为二的办法。
 
